@@ -32,9 +32,9 @@ class Server
         DataInputStream Recieve_data = new DataInputStream(s.getInputStream()); //recieving message
         while(true)
         {
-            System.out.println("enter message to send to client:");
+            System.out.println("\n \nEnter message to send to client : ");
             String str = in.readLine();
-            System.out.println(" Enter the key : ");
+            System.out.println("\nEnter the key : ");
             int shift = sc.nextInt();
             String ciphertext = "";
             char alphabet;
@@ -73,7 +73,7 @@ class Server
                 }
             
             }
-            System.out.println(" ciphertext sent is : " + ciphertext);
+            System.out.println("\nCiphertext to be sent is : " + ciphertext);
             Random ran = new Random();
             int Authen_ID = ran.nextInt(6) + 4;
             String hashed = Hashing(ciphertext);
@@ -84,7 +84,7 @@ class Server
             dos.println(to_send);
             sc.close();
             String str2 = Recieve_data.readLine();
-            System.out.println("Message recieved from client" + str2);
+            System.out.println("\nMessage recieved from client" + str2);
             if(str.equals("end"))
             {
             Server_socket.close();  
