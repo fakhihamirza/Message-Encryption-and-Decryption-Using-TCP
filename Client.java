@@ -16,12 +16,14 @@ class Client
             String str= Reciever.readLine();
             System.out.println( str + "---recieved from server, enter the key for decryption : ");
             int shift = sc.nextInt();
+            String cipherString = str.substring(str.indexOf("-") + 1, str.indexOf("*"));
+            System.out.println("HEHEHEHEHEHEHEH "+cipherString);
             String PlainText = "";
             char alphabet;
-            for(int i=0; i < str.length();i++) 
+            for(int i=0; i < cipherString.length();i++) 
             {
                 // Shift one character at a time
-                alphabet = str.charAt(i);
+                alphabet = cipherString.charAt(i);
                 
                 // if alphabet lies between a and z 
                 if(alphabet >= 'a' && alphabet <= 'z') 
@@ -55,18 +57,19 @@ class Client
             }
             System.out.println("MESSAGE RECIEVED FROM SERVER:"+ PlainText);
             System.out.println("ENTER MESSAGE TO SEND TO SERVER :");
-            sc.close();
             String str2 = sender.readLine();
             dos.println(str2);
             if(PlainText.equals("end"))
             {
-            s.close();
-            break;
+                sc.close();
+                s.close();
+                break;
             }
             if(str2.equals("end"))
             {
-            s.close();
-            break;
+                sc.close();
+                s.close();
+                break;
             }
         }
     }

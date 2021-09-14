@@ -1,8 +1,26 @@
 import java.io.*;
 import java.net.*;
+import java.security.MessageDigest;
+import java.util.Random;
 import java.util.Scanner;
 class Server
 {
+    public static String Hashing(final String base) {
+        try{
+            final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            final byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            final StringBuilder hexString = new StringBuilder();
+            for (int i = 0; i < hash.length; i++) {
+                final String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) 
+                  hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch(Exception ex){
+           throw new RuntimeException(ex);
+        }
+    }
     public static void main(String a[])
         throws IOException
     {
@@ -56,8 +74,14 @@ class Server
             
             }
             System.out.println(" ciphertext sent is : " + ciphertext);
+            Random ran = new Random();
+            int Authen_ID = ran.nextInt(6) + 4;
+            String hashed = Hashing(ciphertext);
+
+            String to_send = Authen_ID +"-"+ ciphertext+"*"+ hashed;
+
             
-            dos.println(ciphertext);
+            dos.println(to_send);
             sc.close();
             String str2 = Recieve_data.readLine();
             System.out.println("Message recieved from client" + str2);
